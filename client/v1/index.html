@@ -31,3 +31,22 @@
   }
   console.log("Name of brands : " + NameProducts);
 </script>
+
+<script type="text/javascript" id="Exo3">
+
+  function sort_products_on_price(products, lowest_first)
+  {
+    const sorted_products = Array.from(products);
+    if(lowest_first){
+      sorted_products.sort((a, b) => (a.price > b.price) ? 1 : -1);
+    }
+    else{
+      sorted_products.sort((a, b) => (a.price < b.price) ? 1 : -1);
+    }
+    return sorted_products;
+  }
+  const sorted_products_price = sort_products_on_price(marketplace, true);
+  console.log("Sorted products on price :");
+  console.log(sorted_products_price);
+
+</script>
