@@ -1,7 +1,7 @@
 // tuto : https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = "mongodb+srv://clearfashion_user:clearfashion_user@cluster0.g1yua.mongodb.net/clearfashion?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb+srv://tomhavy24:clear_fashion@Cluster0.g1yua.mongodb.net/clearfashion?retryWrites=true&w=majority";
 const MONGODB_DB_NAME = 'clearfashion';
 
 async function connect() {
