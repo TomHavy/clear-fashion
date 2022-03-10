@@ -14,6 +14,7 @@ async function connect() {
         console.error(`Error connecting to the database. \n${err}`);
     }
 }
+
 //connect()
 const { ObjectId } = require('mongodb');
 // Find product by id
@@ -35,7 +36,9 @@ module.exports.find_by_id = async id => {
 //const montlimart_products = require('./montlimart.json');
 //const adresse_paris_p1 = require('./adresseparisp1.json');
 //const  adresse_paris_p2 = require('./adresseparisp2.json');
+
 const all_products = require('./all_products.json');
+
 async function insert_products(products) {
     const db = await connect();
     const collection = db.collection('products');
