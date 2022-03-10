@@ -8,6 +8,11 @@ let currentPagination = {};
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
+const selectBrand = document.querySelector('#brand-select');
+const selectSort = document.querySelector('#sort-select');
+const selectPrice = document.querySelector('#price-select');
+const selectFilterDate = document.querySelector('#sort-select');
+const selectFilterPrice = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -59,7 +64,7 @@ const renderProducts = products => {
       <div class="product" id=${product.uuid}>
         <span>${product.brand}</span>
         <a href="${product.link}">${product.name}</a>
-        <span>${product.price}</span>
+        <span>${product.price}€</span>
       </div>
     `;
     })
@@ -96,10 +101,24 @@ const renderIndicators = pagination => {
   spanNbProducts.innerHTML = count;
 };
 
+const renderBrands = products => {
+  let options = [... new Set(products.flatMap(x => x.brand))];
+
+  selectBrand[0] = new Option("all");
+  var i = 1;
+  for (var option of options) {
+    selectBrand[i] = new Option(option);
+
+    i += 1;
+  }
+
+};
+
 const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
+  renderBrands(products);
 };
 
 /**
@@ -116,6 +135,91 @@ selectShow.addEventListener('change', async (event) => {
   render(currentProducts, currentPagination);
 });
 
+//FEATURE 1:
+selectPage.addEventListener('change' , async (event) => {
+  fetchProducts(parseInt(event.target.value),currentPagination.pageSize).then(setCurrentProducts)
+      .then(()=> render(currentProducts,currentPagination));
+
+});
+
+//FEATURE 2:
+
+selectBrand.addEventListener('change', async (event) => {
+  fetchProducts(currentPagination.currentPage,currentPagination.pageSize).then(setCurrentProducts)
+      .then(()=> render(filterBrand(currentProducts,event.target.value),currentPagination));
+})
+
+function filterBrand(currentProducts, brandName) {
+  var filteredProducts = []
+  if (brandName == "all") {
+    filteredProducts = [...currentProducts]
+  }
+  for (var product of currentProducts) {
+    if (product.brand == brandName) {
+      filteredProducts.push(product)
+    }
+  }
+  return filteredProducts
+}
+// FEATURE:3
+
+selectFilterDate.addEventListener('change', event => {
+  fetchProducts(currentPagination.currentPage, currentPagination.pageSize)
+      .then(setCurrentProducts)
+      .then(() => render(filterDate(currentProducts, event.target.value), currentPagination));
+})
+
+function filterDate(currentProducts, selector) {
+  var filteredProducts = []
+  if (selector == "Null") {
+    filteredProducts = [...currentProducts]
+  }
+  else {
+    for (var product of currentProducts) {
+      let today = new Date('2022-01-31')
+      let released = new Date(product.released);
+      if (today - released < 14 * 1000 * 60 * 60 * 24) {
+        filteredProducts.push(product)
+      }
+    }
+  }
+
+  return filteredProducts
+}
+
+
+// FEATURE:4
+selectPrice.addEventListener('change', event => {
+  fetchProducts(currentPagination.currentPage, currentPagination.pageSize)
+      .then(setCurrentProducts)
+      .then(() => render(filterPrice(currentProducts, event.target.value), currentPagination));
+})
+
+function filterPrice(currentProducts, selector) {
+  var filteredProducts = []
+  if (selector == "no_filter") {
+    filteredProducts = [...currentProducts]
+  }
+  if (selector == "Cheaper") {
+    for (var product of currentProducts) {
+      console.log(product.price);
+      console.log(selector);
+      if (product.price <= 50) {
+        filteredProducts.push(product)
+      }
+    }
+  }
+  else {
+    for (var product of currentProducts) {
+      console.log(product.price);
+      if (product.price >= 50) {
+        filteredProducts.push(product)
+      }
+    }
+  }
+
+  return filteredProducts
+}
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
 
