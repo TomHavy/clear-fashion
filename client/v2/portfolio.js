@@ -9,7 +9,7 @@ let checkFavorite = 0;
 
 // inititiqte selectors
 const selectShow = document.querySelector('#show-select');
-const selectPage = document.querySelector('#page-select');
+const selectPage = document.querySelector('#page-select');  
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 const spanLastReleased = document.querySelector('#spanLastReleased');
@@ -44,7 +44,7 @@ const fetchProducts = async (page = 1, size = 12) => {
     //);
 
     const response= await fetch(
-      `https://clear-fashion-lac.vercel.app/?page=${page}&size=${size}`
+      `https://clear-fashion-lac.vercel.app/products/?page=${page}&size=${size}`
     );
 
     /*const response = await fetch(
@@ -54,12 +54,13 @@ const fetchProducts = async (page = 1, size = 12) => {
     /*const response =  await fetch(`https://server-2jko38mwz-aymar35.vercel.app/`);*/
 
     const body = await response.json();
-
+    
     if (body.success !== true) {
       console.error(body);
       return {currentProducts, currentPagination};
     }
-
+    console.log("toto")
+    console.log(body)
     return body.data;
   } catch (error) {
     console.error(error);
@@ -295,20 +296,20 @@ selectBrand.addEventListener('change', event => {
   filterBrand(currentProducts, event.target.value)
 });
 
-//Feature 3 - Filter by recent products
-selectRelease.addEventListener('click', event => {
-  filterRelease(currentProducts)
-});
+// //Feature 3 - Filter by recent products
+// selectRelease.addEventListener('click', event => {
+//   filterRelease(currentProducts)
+// });
 
-//Feature 4 - Filter by reasonable price
-selectPrice.addEventListener('click', event => {
-  filterPrice(currentProducts)
-});
+// //Feature 4 - Filter by reasonable price
+// selectPrice.addEventListener('click', event => {
+//   filterPrice(currentProducts)
+// });
 
-//Feature 5 & 6 - Sort by price & date
-selectSort.addEventListener('change', event => {
-  sortProducts(currentProducts,event.target.value);
-});
+// //Feature 5 & 6 - Sort by price & date
+// selectSort.addEventListener('change', event => {
+//   sortProducts(currentProducts,event.target.value);
+// });
 
 
 sectionProducts.addEventListener('change', event => {
@@ -321,13 +322,15 @@ sectionProducts.addEventListener('change', event => {
   }
 });
 
-selectFavorite.addEventListener('click', event => {
-  renderFavorite();
+// selectFavorite.addEventListener('click', event => {
+//   renderFavorite();
+// });
+
+
+document.addEventListener('DOMContentLoaded', async () =>{
+  const products=await fetchProducts();
+  setCurrentProducts(products);
+  render(currentProducts,currentPagination);
+    // .then(setCurrentProducts)
+    // .then(() => render(currentProducts, currentPagination)
 });
-
-
-document.addEventListener('DOMContentLoaded', () =>
-  fetchProducts()
-    .then(setCurrentProducts)
-    .then(() => render(currentProducts, currentPagination))
-);
