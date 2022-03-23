@@ -43,13 +43,12 @@ const fetchProducts = async (page = 1, size = 12) => {
     ///  `https://clear-fashion-api.vercel.app?page=${page}&size=${size}`
     //);
 
-    const response= await fetch(
-      `https://clear-fashion-lac.vercel.app/products/?page=${page}&size=${size}`
-    );
+    // const response= await fetch(
+    //   `https://clear-fashion-lac.vercel.app/products/?page=${page}&size=${size}`
+    // );
 
-    /*const response = await fetch(
-      `http://localhost:8092/products?page=6&size=12`)
-    );*/
+    const response = await fetch(
+      `http://localhost:8092/products?page=${page}&size=$${size}`);
 
     /*const response =  await fetch(`https://server-2jko38mwz-aymar35.vercel.app/`);*/
 
@@ -57,6 +56,9 @@ const fetchProducts = async (page = 1, size = 12) => {
     
     if (body.success !== true) {
       console.error(body);
+
+
+  
       return {currentProducts, currentPagination};
     }
     console.log("toto")
@@ -136,9 +138,6 @@ const renderIndicators = (products, pagination) => {
   spanLastReleased.innerHTML = lastRelease(products);
 };
 
-
-
-
 const ListBrand = products => {
   const brands = [];
   for(var i = 0; i< products.length; i++)
@@ -151,7 +150,6 @@ const ListBrand = products => {
   return brands;
 }
 
-
 const renderBrands = brands => {
   const options = Array.from(
     {'length': brands.length},
@@ -160,8 +158,6 @@ const renderBrands = brands => {
 
   selectBrand.innerHTML = options;
 };
-
-
 
 const filterBrand = (products, brand) => {
   const filteredList = [];
