@@ -39,16 +39,14 @@ const setCurrentProducts = ({result, meta}) => {
  */
 const fetchProducts = async (page = 1, size = 12) => {
   try {
-    //const response2 = await fetch(
-    ///  `https://clear-fashion-api.vercel.app?page=${page}&size=${size}`
-    //);
 
-    // const response= await fetch(
-    //   `https://clear-fashion-lac.vercel.app/products/?page=${page}&size=${size}`
-    // );
+    const response= await fetch(
+      `https://clear-fashion-lac.vercel.app/products/?page=${page}&size=${size}`
+      // `https://clear-fashion-lac.vercel.app/products?page=1&size=12`
+    );
 
-    const response = await fetch(
-      `http://localhost:8092/products?page=${page}&size=$${size}`);
+    // const response = await fetch(
+    //   `http://localhost:8092/products?page=${page}&size=${size}`);
 
     /*const response =  await fetch(`https://server-2jko38mwz-aymar35.vercel.app/`);*/
 
@@ -57,8 +55,6 @@ const fetchProducts = async (page = 1, size = 12) => {
     if (body.success !== true) {
       console.error(body);
 
-
-  
       return {currentProducts, currentPagination};
     }
     console.log("toto")
@@ -107,7 +103,7 @@ const renderProducts = products => {
 
   div.innerHTML = template;
   fragment.appendChild(div);
-  sectionProducts.innerHTML = '<h2>Products</h2>';
+  sectionProducts.innerHTML = '<br><img  id="object-position-2" src="logo.webp" alt="Logo clear-fashion" /><h2> Products</h2>';
   sectionProducts.appendChild(fragment);
 };
 
@@ -130,13 +126,15 @@ const renderPagination = pagination => {
  * Render page selector
  * @param  {Object} pagination
  */
- 
+
+
 const renderIndicators = (products, pagination) => {
   const {count} = pagination;
 
   spanNbProducts.innerHTML = count;
-  spanLastReleased.innerHTML = lastRelease(products);
+  // spanLastReleased.innerHTML = lastRelease(products);
 };
+
 
 const ListBrand = products => {
   const brands = [];
@@ -199,10 +197,10 @@ const filterRelease = (products) => {
   renderProducts(filteredList);
 };
 
-const lastRelease  = (products) => {
-  const sortedProducts = products.sort((a, b) => (a.released < b.released ? 1 : -1));
-  return (sortedProducts[0].released);
-}
+// const lastRelease  = (products) => {
+//   const sortedProducts = products.sort((a, b) => (a.released < b.released ? 1 : -1));
+//   return (sortedProducts[0].released);
+// }
 
 const sortProducts = (products, type) => {
   var sort_price =[];
@@ -256,7 +254,6 @@ const renderFavorite =() => {
     renderProducts(currentProducts);
   }
 }
-
 
 const render = (products, pagination) => {
   renderProducts(products);
