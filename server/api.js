@@ -36,7 +36,6 @@ app.get('/products_specific', async(req, res) => {
   res.send(result);
 });
 
-
 //Get all products: 
 // app.get('/products', async(req, res) => {
 //   result = await db.find({});
@@ -44,61 +43,60 @@ app.get('/products_specific', async(req, res) => {
 //   res.send(result);
 // });
 
-// app.get('/products', async(request, response) => {
-// 	let page = parseInt(request.query.page);
-//   	let size = parseInt(request.query.size);
-//   	let debut = parseInt((page-1)*size);
+app.get('/products', async(request, response) => {
+	let page = parseInt(request.query.page);
+  	let size = parseInt(request.query.size);
+  	let debut = parseInt((page-1)*size);
 
-// 	const result = await db.find({});
-// 	let prod =[];	
-// 	try{
+	const result = await db.find({});
+	let prod =[];	
+	try{
 
-// 		if(page==null)
-// 		{
-// 			page=1;
-// 		}
-// 		if(size==null)
-// 		{
-// 			size=12;
-// 		}
+		if(page==null)
+		{
+			page=1;
+		}
+		if(size==null)
+		{
+			size=12;
+		}
 
-// 		for(i=debut; i< debut+size;i++){
+		for(i=debut; i< debut+size;i++){
 
-// 			if(result[i] != null){
-//  				prod.push(result[i]);
-//  			}
-//  		}
+			if(result[i] != null){
+ 				prod.push(result[i]);
+ 			}
+ 		}
 
-// 		response.send({"page" :true,"success" :true, "data" : { "meta" :{"currentPage":page, "pageSize":size, 
-// 			"pageCount":prod.length, "count":result.length}, "result":prod}});
-// 		//response.send({'a': prod});
-// 	}catch(e){
-// 		response.send(e);
-// 	}
+		response.send({"page" :true,"success" :true, "data" : { "meta" :{"currentPage":page, "pageSize":size, 
+			"pageCount":prod.length, "count":result.length}, "result":prod}});
+		//response.send({'a': prod});
+	}catch(e){
+		response.send(e);
+	}
+})
 
-// })
-
-app.get('/products', async (request, response) => {
-  // set default values for query parameters
-  const { brand = 'all', price = 'all', limit = 12, skip = 0 , sort = 1} = request.query;
-  if (brand === 'all' && price === 'all') {
-      const products = await db.find_limit([{ '$sort': { "price": parseInt(sort)} }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
-      response.send(products);
-  } else if (brand === 'all') {
-      const products = await db.find_limit([{ '$match': { 'price': { '$lte': parseInt(price) } } }, { '$sort': { "price": parseInt(sort) } }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
-      response.send(products);
-  } else if (price === 'all') {
-      const products = await db.find_limit([{
-          '$match': { 'brand': brand }
-      }, { '$sort': { "price": parseInt(sort) } }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
-      response.send(products);
-  } else {
-      const products = await db.find_limit([{'$match': { 'brand': brand }},
-          { '$match': { 'price': { '$lte': parseInt(price) } } },
-          { '$sort': { "price": parseInt(sort)} }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
-      response.send(products);
-  }
-});
+// app.get('/products', async (request, response) => {
+//   // set default values for query parameters
+//   const { brand = 'all', price = 'all', limit = 12, skip = 0 , sort = 1} = request.query;
+//   if (brand === 'all' && price === 'all') {
+//       const products = await db.find_limit([{ '$sort': { "price": parseInt(sort)} }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
+//       response.send(products);
+//   } else if (brand === 'all') {
+//       const products = await db.find_limit([{ '$match': { 'price': { '$lte': parseInt(price) } } }, { '$sort': { "price": parseInt(sort) } }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
+//       response.send(products);
+//   } else if (price === 'all') {
+//       const products = await db.find_limit([{
+//           '$match': { 'brand': brand }
+//       }, { '$sort': { "price": parseInt(sort) } }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
+//       response.send(products);
+//   } else {
+//       const products = await db.find_limit([{'$match': { 'brand': brand }},
+//           { '$match': { 'price': { '$lte': parseInt(price) } } },
+//           { '$sort': { "price": parseInt(sort)} }, { '$limit': parseInt(limit) }, { '$skip': parseInt(skip) }]);
+//       response.send(products);
+//   }
+// });
 
 //Get product with search params:
 app.get('/products_test', async(req, res) => {
