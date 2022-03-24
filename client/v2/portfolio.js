@@ -7,7 +7,7 @@ let currentPagination = {};
 let currentFavorite = [];
 let checkFavorite = 0;
 
-// inititiqte selectors
+// inititiate selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');  
 const sectionProducts = document.querySelector('#products');
@@ -15,9 +15,7 @@ const spanNbProducts = document.querySelector('#nbProducts');
 const spanLastReleased = document.querySelector('#spanLastReleased');
 const selectBrand = document.querySelector('#brand-select');
 const selectPrice = document.querySelector('#filter-price');
-const selectRelease = document.querySelector('#filter-release');
 const selectFavorite = document.querySelector('#favorite-select');
-const selectSort = document.querySelector('#sort-select');
 
 
 /**
@@ -83,7 +81,7 @@ const renderProducts = products => {
             <input name="favorite"product type="checkbox" id='${product.name}' checked>
         		<span>${product.brand}</span>
         		<a href="${product.link}">${product.name}</a>
-        		<span>${product.price}</span>
+        		<span>${product.price}€</span>
       	</div>
       `;
       }
@@ -94,7 +92,7 @@ const renderProducts = products => {
             <input name="favorite"product type="checkbox" id='${product.name}'>
             <span>${product.brand}</span>
             <a href="${product.link}">${product.name}</a>
-            <span>${product.price}</span>
+            <span>${product.price}€</span>
         </div>
       `;
       }
@@ -114,7 +112,7 @@ const renderProducts = products => {
 const renderPagination = pagination => {
   const {currentPage, pageCount} = pagination;
   const options = Array.from(
-    {'length': pageCount},
+    {'length': 9},
     (value, index) => `<option value="${index + 1}">${index + 1}</option>`
   ).join('');
 
@@ -132,9 +130,19 @@ const renderIndicators = (products, pagination) => {
   const {count} = pagination;
 
   spanNbProducts.innerHTML = count;
-  // spanLastReleased.innerHTML = lastRelease(products);
 };
 
+const filterBrand = (products, brand) => {
+  const filteredList = [];
+  for(var i = 0; i<products.length; i++)
+  {
+    if(products[i]["brand"] == brand)
+    {
+      filteredList.push(products[i]);
+    }
+  }
+  renderProducts(filteredList);
+}
 
 const ListBrand = products => {
   const brands = [];
@@ -157,23 +165,12 @@ const renderBrands = brands => {
   selectBrand.innerHTML = options;
 };
 
-const filterBrand = (products, brand) => {
-  const filteredList = [];
-  for(var i = 0; i<products.length; i++)
-  {
-    if(products[i]["brand"] == brand)
-    {
-      filteredList.push(products[i]);
-    }
-  }
-  renderProducts(filteredList);
-}
 
 const filterPrice = (products) => {
     const filteredList = [];
   for(var i = 0; i<products.length; i++)
   {
-    if(products[i]["price"] <= 50)
+    if(products[i]["price"] <= 70)
     {
       filteredList.push(products[i]);
     }
@@ -183,47 +180,6 @@ const filterPrice = (products) => {
 
 
 Date.prototype.minusDays= function(days){this.setDate(this.getDate() - parseInt(days)); return this; };
-
-const filterRelease = (products) => {
-  const filteredList = [];
-
-  for(var i = 0; i<products.length; i++)
-  {
-    if(products[i]["released"].minusDays <= 14)
-    {
-      filteredList.push(products[i]);
-    }
-  }
-  renderProducts(filteredList);
-};
-
-// const lastRelease  = (products) => {
-//   const sortedProducts = products.sort((a, b) => (a.released < b.released ? 1 : -1));
-//   return (sortedProducts[0].released);
-// }
-
-const sortProducts = (products, type) => {
-  var sort_price =[];
-  if(type == "price-asc")
-  {
-    sort_price = products.sort((a, b) => (a.price > b.price ? 1 : -1));
-  }
-  if(type == "price-desc")
-  {
-    sort_price = products.sort((a, b) => (a.price < b.price ? 1 : -1));
-  }
-  if(type == "date-asc")
-  {
-    sort_price = products.sort((a, b) => (a.released > b.released ? 1 : -1));
-  }
-  if(type == "date-desc")
-  {
-    sort_price = products.sort((a, b) => (a.released < b.released ? 1 : -1));
-  }
-
-  renderProducts(sort_price);
-}
-
 
 const addfavorite = (product) => {
   if(currentFavorite.includes(product) == false)
@@ -289,21 +245,10 @@ selectBrand.addEventListener('change', event => {
   filterBrand(currentProducts, event.target.value)
 });
 
-// //Feature 3 - Filter by recent products
-// selectRelease.addEventListener('click', event => {
-//   filterRelease(currentProducts)
-// });
-
-// //Feature 4 - Filter by reasonable price
-// selectPrice.addEventListener('click', event => {
-//   filterPrice(currentProducts)
-// });
-
-// //Feature 5 & 6 - Sort by price & date
-// selectSort.addEventListener('change', event => {
-//   sortProducts(currentProducts,event.target.value);
-// });
-
+//Feature 4 - Filter by price below 70€
+selectPrice.addEventListener('click', event => {
+  filterPrice(currentProducts)
+});
 
 sectionProducts.addEventListener('change', event => {
   for(var i = 0; i < currentProducts.length; i++)
@@ -315,15 +260,12 @@ sectionProducts.addEventListener('change', event => {
   }
 });
 
-// selectFavorite.addEventListener('click', event => {
-//   renderFavorite();
-// });
-
+selectFavorite.addEventListener('click', event => {
+  renderFavorite();
+});
 
 document.addEventListener('DOMContentLoaded', async () =>{
   const products=await fetchProducts();
   setCurrentProducts(products);
   render(currentProducts,currentPagination);
-    // .then(setCurrentProducts)
-    // .then(() => render(currentProducts, currentPagination)
 });

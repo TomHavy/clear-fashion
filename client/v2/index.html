@@ -24,28 +24,29 @@
         <select name="page" id="page-select"> </select>
       </div>
       <div id="filters">
-        <span>By reasonable price</span>
-        <span>By recently released</span>
-        <div id="brand">
-          <label for="brand-select">By brands:</label>
-          <select name="brand" id="brand-select"> </select>
+          <label for="filters">Filters :</label>
+          <button id="favorite-select">Favorite</button>
+          <button id="filter-price">Price lower then 70€</button>
+          <div id="brand">
+          <label for="brand-select">Brands:</label>
+          <select name="brand" id="brand-select">
+            <option value="brand">all</option>
+            <option value="brand">loom</option>
+            <option value="brand">adresse</option>
+            <option value="brand">1083</option>
+            <option value="brand">dedicated</option>
+            <option value="brand">coteleparis</option>
+          </select>
         </div>
       </div>
-      <div id="sort">
-        <label for="sort-select">Sort:</label>
-        <select name="sort" id="sort-select">
-          <option value="price-asc">Cheaper</option>
-          <option value="price-desc">Expensive</option>
-          <option value="date-asc">Recently released</option>
-          <option value="date-desc">Anciently released</option>
-        </select>
-      </div>
+      
     </section>
     <section id="indicators">
       <br>
           <img  id="object-position-2" src="logo.webp" alt="Logo clear-fashion" />
           <h2>Indicators</h2>
       <div>
+        <br>
         <span>Number of products</span>
         <span id="nbProducts">0</span>
       </div>
@@ -54,20 +55,8 @@
         <span>0</span>
       </div>
       <div>
-        <span>p50 price value</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>p90 price value</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>p95 price value</span>
-        <span>0</span>
-      </div>
-      <div>
         <span>Last released date</span>
-        <span>2020-01-01</span>
+        <span>2022-01-01</span>
       </div>
     </section>
     <section id="products"></section>
