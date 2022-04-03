@@ -1,0 +1,22 @@
+README 
+
+Bienvenue dans notre Web Application, afin d'y accéder, cliquez sur ce lien. Le server est hébergé par Vercel. 
+
+https://client-one-rose.vercel.app/
+
+En cas de bug d'affichage, nous vous invitons à recharger la page (Cela peut arriver si vous êtes sur Chrome, nous vous invitons dans ce cas à changer de navigateur.) 
+
+Vous voici dans notre application, elle réunit des vêtements et vous permet de les filtrer selon plusieurs critères.
+Vous pouvez: 
+- Sélectionner le nombre d'objets par page
+- Changer de page (le nombre de pages étant plus longues que nécessaire, si vous allez trop loin, les pages seront vides)
+- Marquer vos articles favoris en cochant sur la case située à gauche de l'article
+- Filtrer les articles coûtant moins de 70 euros
+- Afficher les vêtements d'une seule marque sélectionnée (Veuilliez aller à la page 2 avec 48 éléments pour voir le fonctionnement)
+
+Si un article vous plaît, vous pouvez cliquer directement sur son lien afin d'être redirigé sur la page où l'acheter. 
+
+Merci à notre professeur pour ce cours très bien mené malgré le peu de temps que nous avions. 
+
+Réalisé par Jean-Michel LAM, Tom HAVYARIMANA, Gatien FOURNIER, Hippolyte GUESDON-VENNERIE
+
